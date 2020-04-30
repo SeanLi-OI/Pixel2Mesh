@@ -42,9 +42,9 @@ placeholders = {
     'support1': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)], # graph structure in the first block
     'support2': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)], # graph structure in the second block
     'support3': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)], # graph structure in the third block
-    'faces': [tf.placeholder(tf.int32, shape=(None, 4)) for _ in range(num_blocks)], # helper for face loss (not used)
+    'faces': [tf.placeholder(tf.int32, shape=(None, 3)) for _ in range(num_blocks)], # helper for face loss (not used)
     'edges': [tf.placeholder(tf.int32, shape=(None, 2)) for _ in range(num_blocks)], # helper for normal loss
-    'lape_idx': [tf.placeholder(tf.int32, shape=(None, 10)) for _ in range(num_blocks)], # helper for laplacian regularization
+    'lape_idx': [tf.placeholder(tf.int32, shape=(None, 15)) for _ in range(num_blocks)], # helper for laplacian regularization
     'pool_idx': [tf.placeholder(tf.int32, shape=(None, 2)) for _ in range(num_blocks-1)] # helper for graph unpooling
 }
 model = GCN(placeholders, logging=True)
