@@ -16,9 +16,9 @@
 #
 import os, sys
 import tensorflow as tf
-from pixel2mesh.models import GCN
-from pixel2mesh.fetcher import *
-from pixel2mesh.cd_dist import nn_distance
+from p2m.models import GCN
+from p2m.fetcher import *
+from p2m.chamfer import nn_distance
 sys.path.append('external')
 from tf_approxmatch import approx_match, match_cost
 
@@ -27,7 +27,7 @@ flags = tf.app.flags
 FLAGS = flags.FLAGS
 flags.DEFINE_string('data_list', 'Data/test_list.txt', 'Data list path.')
 flags.DEFINE_float('learning_rate', 3e-5, 'Initial learning rate.')
-flags.DEFINE_integer('hidden', 192, 'Number of units in  hidden layer.')
+flags.DEFINE_integer('hidden', 256, 'Number of units in  hidden layer.')
 flags.DEFINE_integer('feat_dim', 963, 'Number of units in perceptual feature layer.')
 flags.DEFINE_integer('coord_dim', 3, 'Number of units in output layer.') 
 flags.DEFINE_float('weight_decay', 5e-6, 'Weight decay for L2 loss.')
@@ -113,7 +113,8 @@ pkl = pickle.load(open('Data/ellipsoid/info_ellipsoid.dat', 'rb'))
 feed_dict = construct_feed_dict(pkl, placeholders)
 
 ###
-class_name = {'02828884':'bench','03001627':'chair','03636649':'lamp','03691459':'speaker','04090263':'firearm','04379243':'table','04530566':'watercraft','02691156':'plane','02933112':'cabinet','02958343':'car','03211117':'monitor','04256520':'couch','04401088':'cellphone'}
+# class_name = {'02828884':'bench','03001627':'chair','03636649':'lamp','03691459':'speaker','04090263':'firearm','04379243':'table','04530566':'watercraft','02691156':'plane','02933112':'cabinet','02958343':'car','03211117':'monitor','04256520':'couch','04401088':'cellphone'}
+class_name={'0':'face'}
 model_number = {i:0 for i in class_name}
 sum_f = {i:0 for i in class_name}
 sum_cd = {i:0 for i in class_name}
@@ -131,7 +132,8 @@ for iters in range(train_number):
 	d1,i1,d2,i2,emd = sess.run([dist1,idx1,dist2,idx2, emd_dist], feed_dict={xyz1:label,xyz2:predict})
 	cd = np.mean(d1) + np.mean(d2)
 
-	class_id = model_id.split('_')[0]
+	# class_id = model_id.split('_')[0]
+	class_id = '0'
 	model_number[class_id] += 1.0
 
 	sum_f[class_id] += f_score(label,predict,d1,d2,[0.0001, 0.0002])
