@@ -81,7 +81,8 @@ vert = sess.run(model.output3, feed_dict=feed_dict)
 vert = np.hstack((np.full([vert.shape[0],1], 'v'), vert))
 face = np.loadtxt('Data/ellipsoid/face3.obj', dtype='|S32')
 mesh = np.vstack((vert, face))
-pred_path = FLAGS.image.replace('.png', '.obj')
+# pred_path = FLAGS.image.replace('.png', '.obj')
+pred_path = '/content/101_model.obj'
 np.savetxt(pred_path, mesh, fmt='%s', delimiter=' ')
 
 print 'Saved to', pred_path
