@@ -47,9 +47,9 @@ placeholders = {
     'support1': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)],
     'support2': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)],
     'support3': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)],
-    'faces': [tf.placeholder(tf.int32, shape=(None, 3)) for _ in range(num_blocks)],  #for face loss, not used.
+    'faces': [tf.placeholder(tf.int32, shape=(None, 4)) for _ in range(num_blocks+1)],  #for face loss, not used.
     'edges': [tf.placeholder(tf.int32, shape=(None, 2)) for _ in range(num_blocks)], 
-    'lape_idx': [tf.placeholder(tf.int32, shape=(None, 15)) for _ in range(num_blocks)], #for laplace term
+    'lape_idx': [tf.placeholder(tf.int32, shape=(None, 10)) for _ in range(num_blocks)], #for laplace term
     'pool_idx': [tf.placeholder(tf.int32, shape=(None, 2)) for _ in range(num_blocks-1)] #for unpooling
 }
 model = GCN(placeholders, logging=True)
