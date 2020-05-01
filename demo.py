@@ -28,7 +28,7 @@ tf.set_random_seed(seed)
 # Settings
 flags = tf.app.flags
 FLAGS = flags.FLAGS
-flags.DEFINE_string('image', 'Data/examples/plane.png', 'Testing image.')
+flags.DEFINE_string('image', 'Data/output/101_model_1.png', 'Testing image.')
 flags.DEFINE_float('learning_rate', 0., 'Initial learning rate.')
 flags.DEFINE_integer('hidden', 256, 'Number of units in  hidden layer.')
 flags.DEFINE_integer('feat_dim', 963, 'Number of units in perceptual feature layer.')
@@ -45,9 +45,9 @@ placeholders = {
     'support1': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)], # graph structure in the first block
     'support2': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)], # graph structure in the second block
     'support3': [tf.sparse_placeholder(tf.float32) for _ in range(num_supports)], # graph structure in the third block
-    'faces': [tf.placeholder(tf.int32, shape=(None, 4)) for _ in range(num_blocks)], # helper for face loss (not used)
+    'faces': [tf.placeholder(tf.int32, shape=(None, 3)) for _ in range(num_blocks)], # helper for face loss (not used)
     'edges': [tf.placeholder(tf.int32, shape=(None, 2)) for _ in range(num_blocks)], # helper for normal loss
-    'lape_idx': [tf.placeholder(tf.int32, shape=(None, 10)) for _ in range(num_blocks)], # helper for laplacian regularization
+    'lape_idx': [tf.placeholder(tf.int32, shape=(None, 15)) for _ in range(num_blocks)], # helper for laplacian regularization
     'pool_idx': [tf.placeholder(tf.int32, shape=(None, 2)) for _ in range(num_blocks-1)] # helper for graph unpooling
 }
 model = GCN(placeholders, logging=True)
